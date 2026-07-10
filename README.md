@@ -1,6 +1,5 @@
 # Regret Browser
-
-> A local-first browser extension that predicts whether a webpage is worth your attention.
+A local-first browser extension that predicts whether a webpage is worth your attention.
 
 Regret Browser is a Chrome extension that estimates the risk that an article, video page, or post will be shallow, repetitive, manipulative, or distracting. It gives a transparent 0–100 Regret Score, explains the signals behind it, and adapts to simple feedback without sending browsing data to a server.
 
