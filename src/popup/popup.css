@@ -1,0 +1,12 @@
+.popup { box-sizing: border-box; max-height: 600px; overflow-y: auto; padding: 16px; width: 380px; }
+.icon-button { border: 0; background: transparent; font-size: 17px; padding: 6px; }
+.page-title { font-size: 13px; font-weight: 650; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reasons { color: #55594f; font-size: 12px; margin: 0; padding-left: 17px; }
+.reasons li + li { margin-top: 4px; }
+.feedback-prompt { margin: 0 0 7px; }
+.feedback-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.feedback-grid button { font-size: 12px; padding: 6px 8px; }
+.feedback-grid .selected { background: #33452c; color: #fff; }
+.grow { flex: 1; }
+.quiet-action { background: transparent; border: 0; color: #65695f; font-size: 11px; padding: 2px; text-decoration: underline; }
+.privacy-note { color: #85887f; font-size: 10px; margin: 1px 0 0; text-align: center; }

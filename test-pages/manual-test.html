@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A local fixture for manually testing Regret Browser.">
+    <title>Regret Browser Manual Test</title>
+    <style>
+      body { font: 16px/1.6 system-ui, sans-serif; margin: 0 auto; max-width: 760px; padding: 32px; }
+      nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+      button { cursor: pointer; padding: 8px 12px; }
+      article, main { border: 1px solid #ccc; border-radius: 12px; padding: 24px; }
+      [contenteditable] { background: #fff5c2; margin-top: 24px; padding: 12px; }
+    </style>
+  </head>
+  <body>
+    <nav aria-label="Test scenarios">
+      <button type="button" data-scenario="quality">Quality article</button>
+      <button type="button" data-scenario="clickbait">Clickbait article</button>
+      <button type="button" data-scenario="async">Delayed content</button>
+      <button type="button" data-scenario="spa">SPA navigation</button>
+    </nav>
+
+    <article>
+      <p>This teaser appears before the main element and must not become the analyzed content root.</p>
+    </article>
+
+    <main id="content">
+      <h1>Regret Browser manual test</h1>
+      <p>Select a scenario above. The extension badge should update after each simulated navigation.</p>
+    </main>
+
+    <script>
+      const content = document.querySelector('#content');
+
+      const scenarios = {
+        quality: {
+          title: 'Independent battery study reports measured improvement',
+          body: `
+            <h1>Independent battery study reports measured improvement</h1>
+            <p>Researchers measured battery performance across three controlled trials involving several hundred devices. The published methodology describes the sample, environmental conditions, charging cycles, and statistical uncertainty.</p>
+            <p>The results show a modest improvement rather than a dramatic breakthrough. The authors also document limitations, conflicting observations, and the additional experiments needed before drawing broader conclusions.</p>
+            <p><a href="/methods">Read the methodology</a></p>
+          `,
+        },
+        clickbait: {
+          title: "You Won't Believe This REVOLUTIONARY Secret!",
+          body: `
+            <h1>You Won't Believe This REVOLUTIONARY Secret!</h1>
+            <p>This mind-blowing discovery will shock you! In this article, let's dive in without further ado and reveal the ultimate secret everyone must see.</p>
+            <p>This amazing secret changes everything. This amazing secret changes everything. This amazing secret changes everything.</p>
+            <p><a href="/one">Next shocking story</a> <a href="/two">Another secret</a> <a href="/three">You must see this</a> <a href="/four">More</a></p>
+          `,
+        },
+        spa: {
+          title: 'SPA route changed successfully',
+          body: `
+            <h1>SPA route changed successfully</h1>
+            <p>This content was rendered after history.pushState changed the URL without reloading the document. The Regret Browser badge should disappear briefly and then return with a newly generated report.</p>
+            <p>The route contains enough ordinary explanatory text to produce a stable analysis and demonstrate that the old report link is no longer being displayed.</p>
+          `,
+        },
+      };
+
+      function render(name) {
+        const scenario = scenarios[name];
+        history.pushState({}, '', `/${name}?private_token=must-not-be-exported#private-fragment`);
+        document.title = scenario.title;
+        content.innerHTML = `${scenario.body}
+          <div contenteditable="plaintext-only">PRIVATE EDITABLE NOTE: you won't believe this terrifying secret. This must never affect the score or notable phrases.</div>`;
+      }
+
+      function renderDelayed() {
+        history.pushState({}, '', '/async?secret=must-not-be-exported#private-fragment');
+        document.title = 'Delayed article content';
+        content.innerHTML = '<h1>Loading…</h1>';
+        window.setTimeout(() => {
+          content.innerHTML = `
+            <h1>Delayed article content is now ready</h1>
+            <p>This article was inserted after the initial document became idle. The extension should retry its sparse-page analysis and display a badge without requiring a page reload.</p>
+            <p>The second paragraph supplies enough useful text to pass the minimum content threshold and complete the delayed-content test successfully.</p>
+          `;
+        }, 1500);
+      }
+
+      document.querySelector('nav').addEventListener('click', (event) => {
+        const name = event.target.dataset.scenario;
+        if (!name) return;
+        if (name === 'async') renderDelayed();
+        else render(name);
+      });
+
+      window.addEventListener('popstate', () => render('quality'));
+    </script>
+  </body>
+</html>
