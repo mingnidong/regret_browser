@@ -6,9 +6,7 @@ Regret Browser is a Chrome extension that estimates the risk that an article, vi
 
 ## Why it exists
 
-Clicks are cheap, but attention is not. Search results and social feeds frequently reward inflated headlines, SEO filler, outrage, and repetition. Regret Browser provides a quick second opinion while preserving the user's ability to decide.
-
-It is a heuristic tool, not an AI model or a truth detector. Every score comes from deterministic, inspectable rules.
+Clicks are cheap, but attention is not. Search results and social feeds frequently reward inflated headlines, SEO filler, outrage, and repetition. Regret Browser provides a quick second opinion while preserving the user's ability to decide. BTW this is a heuristic tool, not an AI model or a truth detector. Every score comes from deterministic, inspectable rules.
 
 ## Features
 
@@ -24,9 +22,7 @@ It is a heuristic tool, not an AI model or a truth detector. Every score comes f
 ## Privacy model
 
 All analysis runs inside the extension. Page snapshots, reports, settings, and feedback are stored only in `chrome.storage.local`.
-
 The content script reads visible page text and metadata. It deliberately excludes form controls, password fields, editable regions, hidden elements, scripts, styles, navigation, and common dialog/checkout/account areas. Regret Browser does not transmit page content anywhere.
-
 The extension requests access to HTTP and HTTPS pages because analysis and the optional badge must run on the page being evaluated. Chrome-internal pages and other restricted URLs cannot be analyzed.
 
 ## Install from a release build
@@ -125,7 +121,3 @@ The options page exports a versioned JSON file containing settings, feedback, do
 ## Contributing
 
 Issues and pull requests are welcome. Keep analysis deterministic, local-first, explainable, and covered by tests. Do not introduce telemetry, remote inference, or a backend without a clearly separated opt-in design.
-
-## License
-
-MIT
